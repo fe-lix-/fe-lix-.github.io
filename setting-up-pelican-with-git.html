@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>A web log</title>
+        <title>Setting up Pelican with Git</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
                 <link href="localhost:8000/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A web log Atom Feed" />
@@ -23,16 +23,20 @@
                 <h1><a href="/">A web log </a></h1>
                 <nav><ul>
                                                                     <li><a href="/pages/about-me.html">About me</a></li>
-                                                                    <li ><a href="/category/web-log.html">Web log</a></li>
+                                                                    <li class="active"><a href="/category/web-log.html">Web log</a></li>
                                 </ul></nav>
         </header><!-- /#banner -->
-                
-            
+        <section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/setting-up-pelican-with-git.html" rel="bookmark"
+           title="Permalink to Setting up Pelican with Git">Setting up Pelican with Git</a></h1>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fe_lix_">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    </header>
 
-                            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/setting-up-pelican-with-git.html">Setting up Pelican with Git</a></h1> 
-                    <footer class="post-info">
+    <div class="entry-content">
+      <footer class="post-info">
         <abbr class="published" title="2013-03-18T09:24:18">
                 Mon 18 March 2013
         </abbr>
@@ -42,7 +46,7 @@
         </address>
         <p>In <a href="/category/web-log.html">Web log</a>. </p>
 <p>tags: <a href="/tag/pelican.html">pelican</a><a href="/tag/git.html">git</a><a href="/tag/python.html">python</a></p>
-</footer><!-- /.post-info --><p>My goal was to be able to edit my Pelican blog in local, commit the modifications
+</footer><!-- /.post-info -->      <p>My goal was to be able to edit my Pelican blog in local, commit the modifications
 I made and then by pushing it to a git repository, the blog would be regenerated
 on the remote webserver.</p>
 <p>I found <a href="https://github.com/theon/pelicangit">pelicangit</a>, but the fact that it 
@@ -106,42 +110,12 @@ make html
 
 <p>Now everytime you push content to your remote server, the content gets updated.</p>
 <div class="codehilite"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">push</span> <span class="n">blog</span> <span class="n">master</span>
-</pre></div>                </article>
-                            </aside><!-- /#featured -->
-                            <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-                                                
-
-                 
-                        <li><article class="hentry">    
-                <header>
-                    <h1><a href="/there-is-always-a-first-step.html" rel="bookmark"
-                           title="Permalink to There is always a first step">There is always a first step</a></h1>
-                </header>
-                
-                <div class="entry-content">
-                <footer class="post-info">
-        <abbr class="published" title="2013-03-16T20:24:57">
-                Sat 16 March 2013
-        </abbr>
-
-                <address class="vcard author">
-                By <a class="url fn" href="/author/felix-delval.html">Félix Delval</a>
-        </address>
-        <p>In <a href="/category/web-log.html">Web log</a>. </p>
-
-</footer><!-- /.post-info -->                <p>A boring yet poetic first post</p>
-                <a class="readmore" href="/there-is-always-a-first-step.html">read more</a>
-                                </div><!-- /.entry-content -->
-            </article></li>
-                            </ol><!-- /#posts-list -->
-                            <p class="paginator">
-        Page 1 / 1
-    </p>
-                        </section><!-- /#content -->
-                    <section id="extras" class="body">
+</pre></div>
+    </div><!-- /.entry-content -->
+    
+  </article>
+</section>
+        <section id="extras" class="body">
                         <div class="blogroll">
                         <h2>blogroll</h2>
                         <ul>

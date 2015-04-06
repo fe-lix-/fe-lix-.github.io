@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>A web log</title><link rel="alternate" href="/"></link><link rel="self" href="localhost:8000/feeds/all.atom.xml"></link><id>/</id><updated>2013-03-18T09:24:18+01:00</updated><entry><title>Setting up Pelican with Git</title><link rel="alternate" href="/setting-up-pelican-with-git.html"></link><updated>2013-03-18T09:24:18+01:00</updated><author><name>Félix Delval</name></author><id>tag:,2013-03-18:setting-up-pelican-with-git.html</id><summary type="html">&lt;p&gt;My goal was to be able to edit my Pelican blog in local, commit the modifications
+I made and then by pushing it to a git repository, the blog would be regenerated
+on the remote webserver.&lt;/p&gt;
+&lt;p&gt;I found &lt;a href="https://github.com/theon/pelicangit"&gt;pelicangit&lt;/a&gt;, but the fact that it 
+forces to add a configuration file in /etc/ didn't please me. I am sure there is
+a way to this without needing administration right.&lt;/p&gt;
+&lt;p&gt;My setup is inspired from &lt;a href="http://crosbymichael.com/how-to-manage-your-website-with-git.html," title="How to manage your website with git"&gt;Micheal Crosby&lt;/a&gt;.
+The main difference between my setup and his, is that I do not want the HTML output to be
+in the git repository. I want pelican to generate it on the remote server, in order
+to get a git repository as light as possible.&lt;/p&gt;
+&lt;h2&gt;Starting your blog and first post&lt;/h2&gt;
+&lt;p&gt;This is best described in the &lt;a href="http://docs.getpelican.com/en/3.1.1/getting_started.html"&gt;pelican documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Setting a .gitignore file&lt;/h2&gt;
+&lt;p&gt;We will be editing our blog on our local computer, chances are we will also use
+the &lt;code&gt;make devserver&lt;/code&gt; to take a look at what we have produced. In that case, pelican
+will create file that we may not want to add to our git repository.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gitignore&lt;/span&gt;
+&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;
+&lt;span class="n"&gt;__pycache__&lt;/span&gt;
+&lt;span class="n"&gt;output&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we can commit all the content of our blog and start working on the remote server.&lt;/p&gt;
+&lt;h2&gt;Setting up the remote server&lt;/h2&gt;
+&lt;p&gt;The default folder for all my webcontent is /var/www and it belongs to the
+user www-data. Here lives all of my websites.&lt;/p&gt;
+&lt;p&gt;I also have a /var/git folder where I store all of my git repositories. This folder is also
+owned by www-data. So it will be possible for the user www-data to write both in /var/www and /var/git.&lt;/p&gt;
+&lt;p&gt;We must first create a bare git repository :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mkdir&lt;/span&gt;  &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;myblog&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;myblog&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;bare&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we must create the hook that will generate our HTML content after every push :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;myblog&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;hooks&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;receive&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here is the content of my file&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nv"&gt;GIT_WORK_TREE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/www/myblog.git git checkout -f
+&lt;span class="nb"&gt;cd&lt;/span&gt; /var/www/myblog
+make html
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Let's make sure the hook is executable :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="mi"&gt;755&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;myblog&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;hooks&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;receive&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Let finish by adding the remote to our local git repository, so we can push on the remote server.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;remote&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;blog&lt;/span&gt; &lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;myserver&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;myblog&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now everytime you push content to your remote server, the content gets updated.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="n"&gt;blog&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="pelican"></category><category term="git"></category><category term="python"></category></entry><entry><title>There is always a first step</title><link rel="alternate" href="/there-is-always-a-first-step.html"></link><updated>2013-03-16T20:24:57+01:00</updated><author><name>Félix Delval</name></author><id>tag:,2013-03-16:there-is-always-a-first-step.html</id><summary type="html">&lt;p&gt;There is always a first step. It is never the most interesting path of any journey.
+It can be spectacular, banal and even boring. A first step is alway a step ahead in the unknown.
+So I guess it can only be a interesting one.:&lt;/p&gt;</summary></entry></feed>
