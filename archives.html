@@ -1,61 +1,107 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-        <meta charset="utf-8" />
-        <title>A web log</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A web log, Learn & share">
 
-        <!--[if IE]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+
+        <title>all posts // A web log // Learn & share</title>
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/theme/css/pure.css">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 </head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">A web log </a></h1>
-                <nav><ul>
-                    <li><a href="/pages/about-me.html">About me</a></li>
-                    <li><a href="/category/web-log.html">Web log</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-<section id="content" class="body">
-<h1>Archives for A web log</h1>
+<body>
+<div class="pure-g-r" id="layout">
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('/images/cover.jpg')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <h1 class="brand-main"><a href="/">A web log</a></h1>
+                    <p class="tagline">Learn & share</p>
+                    <p class="links"><a href="/pages/about-me.html">About me</a></p>
+                    <p class="social">
+                        <a href="https://twitter.com/fe_lix_">
+                            <i class="fa fa-twitter-square fa-3x"></i>
+                        </a>
+                        <a href="http://es.linkedin.com/in/felixdelval/">
+                            <i class="fa fa-linkedin-square fa-3x"></i>
+                        </a>
+                        <a href="https://github.com/fe-lix-">
+                            <i class="fa fa-github-square fa-3x"></i>
+                        </a>
+                    <p>
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>    <div class="pure-u-1">
+        <div class="content">
+            <h1 class="content-subhead">All posts</h1>
+                <div class="archive-item">
+                    <a href="/author/felix-delval.html" title="See posts by Félix Delval">
+                            <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
+                    </a>
+                    <h5 class="archive-date">2015</h5>
+                    <h4 class="archive-date">09 April</h4>
+                    <div class="archive-post"><a href="writing-expressiv-unit-test-injected-dependancy.html">Writing expressive unit test with injected dependancy</a></div>
+                    <p class="archive-meta">Félix Delval in <a href="/category/web-log.html">Web log</a></p>
+                </div>
+                <div class="archive-item">
+                    <a href="/author/felix-delval.html" title="See posts by Félix Delval">
+                            <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
+                    </a>
+                    <h5 class="archive-date">2013</h5>
+                    <h4 class="archive-date">18 March</h4>
+                    <div class="archive-post"><a href="setting-up-pelican-with-git.html">Setting up Pelican with Git</a></div>
+                    <p class="archive-meta">Félix Delval in <a href="/category/web-log.html">Web log</a></p>
+                </div>
+                <div class="archive-item">
+                    <a href="/author/felix-delval.html" title="See posts by Félix Delval">
+                            <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
+                    </a>
+                    <h5 class="archive-date">2013</h5>
+                    <h4 class="archive-date">16 March</h4>
+                    <div class="archive-post"><a href="there-is-always-a-first-step.html">There is always a first step</a></div>
+                    <p class="archive-meta">Félix Delval in <a href="/category/web-log.html">Web log</a></p>
+                </div>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <p>&copy; A web log &ndash;
+        Built with <a href="https://github.com/PurePelicanTheme/pure">Pure Theme</a>
+        for <a href="http://blog.getpelican.com/">Pelican</a>
+    </p>
+</footer>    <script>
+        var $top = $('.go-top');
 
-<dl>
-    <dt>Thu 09 April 2015</dt>
-    <dd><a href="/writing-expressiv-unit-test-injected-dependancy.html">Writing expressive unit test with injected dependancy</a></dd>
-    <dt>Mon 18 March 2013</dt>
-    <dd><a href="/setting-up-pelican-with-git.html">Setting up Pelican with Git</a></dd>
-    <dt>Sat 16 March 2013</dt>
-    <dd><a href="/there-is-always-a-first-step.html">There is always a first step</a></dd>
-</dl>
-</section>
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
 
-                            <li><a href="https://twitter.com/fe_lix_">Twitter</a></li>
-                            <li><a href="http://es.linkedin.com/in/felixdelval/">LinkedIn</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
 </body>
 </html>

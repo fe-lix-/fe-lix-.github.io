@@ -1,229 +1,134 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-        <meta charset="utf-8" />
-        <title>A web log - Web log</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A web log, Learn & share">
 
-        <!--[if IE]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+
+        <title>Web log category // A web log // Learn & share</title>
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/theme/css/pure.css">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 </head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">A web log </a></h1>
-                <nav><ul>
-                    <li><a href="/pages/about-me.html">About me</a></li>
-                    <li class="active"><a href="/category/web-log.html">Web log</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/writing-expressiv-unit-test-injected-dependancy.html">Writing expressive unit test with injected dependancy</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2015-04-09T22:54:23+02:00">
-                Published: Thu 09 April 2015
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/felix-delval.html">Félix Delval</a>
-        </address>
-<p>In <a href="/category/web-log.html">Web log</a>. </p>
-<p>tags: <a href="/tag/xunit.html">xUnit</a> <a href="/tag/php.html">php</a> <a href="/tag/expressiveness.html">expressiveness</a> </p>
-</footer><!-- /.post-info --><p>Recently I have been facing problem writing maintainable unit test for code that
+<body>
+<div class="pure-g-r" id="layout">
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('/images/cover.jpg')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <h1 class="brand-main"><a href="/">A web log</a></h1>
+                    <p class="tagline">Learn & share</p>
+                    <p class="links"><a href="/pages/about-me.html">About me</a></p>
+                    <p class="social">
+                        <a href="https://twitter.com/fe_lix_">
+                            <i class="fa fa-twitter-square fa-3x"></i>
+                        </a>
+                        <a href="http://es.linkedin.com/in/felixdelval/">
+                            <i class="fa fa-linkedin-square fa-3x"></i>
+                        </a>
+                        <a href="https://github.com/fe-lix-">
+                            <i class="fa fa-github-square fa-3x"></i>
+                        </a>
+                    <p>
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>    <div class="pure-u-1">
+        <div class="content">
+            <!-- A wrapper for all the blog posts -->
+            <div class="posts">
+                <h1 class="content-subhead">
+Posts in 'Web log'                </h1>
+<section class="post">
+    <header class="post-header">
+        <a href="/author/felix-delval.html" title="See posts by Félix Delval">
+                <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
+        </a>
+        <h3><a class="post-title" href="/writing-expressiv-unit-test-injected-dependancy.html">Writing expressive unit test with injected dependancy</a></h3>
+            <p class="post-meta"><p>Recently I have been facing problem writing maintainable unit test for code that
 is relying heavily on injected dependancy.</p>
 <p>Sometimes you are facing code that is using multiple injected dependancies that should
 all be mocked for testing purpose. Mocking is a very effective pattern to test part of
-a system in isolation. Though when the unit test code is mock intensive it begins to be
-hard to understand, maintain and serve it first purpose help us in refactoring.</p>
-<p>Here is a pattern I found usefull to solve this issue.</p>
-<p>Let's take the example of an class and a interface it uses as a dependancy. Here is the interface:</p>
-<div class="highlight"><pre><span class="cp">&lt;?php</span>
+a system ...</p></p>
+            <p class="post-meta">
+                in <a href="/category/web-log.html">Web log</a> &middot; Thu 09 April 2015
+            </p>
+    </header>
+</section><section class="post">
+    <header class="post-header">
+        <a href="/author/felix-delval.html" title="See posts by Félix Delval">
+                <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
+        </a>
+        <h3><a class="post-title" href="/setting-up-pelican-with-git.html">Setting up Pelican with Git</a></h3>
+            <p class="post-meta"><p>My goal was to be able to edit my Pelican blog in local, commit the modifications
+I made and then by pushing it to a git repository, the blog would be regenerated
+on the remote webserver.</p>
+<p>I found <a href="https://github.com/theon/pelicangit">pelicangit</a>, but the fact that it 
+forces to add a configuration file ...</p></p>
+            <p class="post-meta">
+                in <a href="/category/web-log.html">Web log</a> &middot; Mon 18 March 2013
+            </p>
+    </header>
+</section><section class="post">
+    <header class="post-header">
+        <a href="/author/felix-delval.html" title="See posts by Félix Delval">
+                <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
+        </a>
+        <h3><a class="post-title" href="/there-is-always-a-first-step.html">There is always a first step</a></h3>
+            <p class="post-meta"><p>A boring yet poetic first post</p></p>
+            <p class="post-meta">
+                in <a href="/category/web-log.html">Web log</a> &middot; Sat 16 March 2013
+            </p>
+    </header>
+</section><div class="pagination-wrapper content-subhead">
+    <div class="pagination">
+        <div class="pagination-left">
+                &nbsp;
+        </div>
+        <span>Page 1 / 1</span>
+        <div class="pagination-right">
+        </div>
+    </div>
+</div><footer class="footer">
+    <p>&copy; A web log &ndash;
+        Built with <a href="https://github.com/PurePelicanTheme/pure">Pure Theme</a>
+        for <a href="http://blog.getpelican.com/">Pelican</a>
+    </p>
+</footer>            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        var $top = $('.go-top');
 
-<span class="k">interface</span> <span class="nx">CassetteInterface</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">read</span><span class="p">();</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">isOver</span><span class="p">();</span>
-<span class="p">}</span>
-</pre></div>
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
 
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
 
-<p>And here the class that uses it :</p>
-<div class="highlight"><pre><span class="cp">&lt;?php</span>
-
-<span class="k">class</span> <span class="nc">CassettePlayer</span>
-<span class="p">{</span>
-    <span class="k">private</span> <span class="nv">$cassette</span><span class="p">;</span>
-
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">CassetteInterface</span> <span class="nv">$cassette</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span> <span class="o">=</span> <span class="nv">$cassette</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">playAndRewind</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">isOver</span><span class="p">())</span> <span class="p">{</span>
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">read</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">rewind</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>If you would go writing test for this class, once all code as written, you would
-most likely start writing a test like this :</p>
-<div class="highlight"><pre><span class="cp">&lt;?php</span>
-
-<span class="k">class</span> <span class="nc">CassettePlayerTest</span> <span class="nx">extend</span> <span class="nx">TestCase</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="nx">testPlayLoop</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nv">$cassette</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;CassetteInterface&#39;</span><span class="p">);</span>
-
-        <span class="nv">$cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
-            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;play&#39;</span><span class="p">);</span>
-        <span class="nv">$cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
-            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;rewind&#39;</span><span class="p">);</span>
-
-        <span class="nv">$player</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CassettePlayer</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="p">);</span>
-
-        <span class="nv">$player</span><span class="o">-&gt;</span><span class="na">playAndRewind</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>Writing the unit test for this class in such a manner leads to complex unit test
-code that is not maintanable and harder to read. Even though the code is short,
-the way the mock is around leads to complex formulation, more so when you start
-setting the expecting parameters and the desired output.</p>
-<p>Let's try to restructure the test so it is a bit more modular and reusable.</p>
-<p>I like doing the instantiation of the mock in private properties inside
-of the <code>TestCase::setUp</code> method. It gives two big advantages.</p>
-<p>Firstly the mock dependancies declaration needs to be in only one place, 
-making sure that all your tests are using the same objects.</p>
-<p>Secondly using them in a property, makes it easy to extract the behaviour definition of the
-mock to a method without parameters, creating easily readable and reusable behavioural
-methods.</p>
-<p>Here is how it would end :</p>
-<div class="highlight"><pre><span class="cp">&lt;?php</span>
-
-<span class="k">class</span> <span class="nc">CassettePlayerTest</span> <span class="nx">extend</span> <span class="nx">TestCase</span>
-<span class="p">{</span>
-    <span class="k">private</span> <span class="nv">$cassette</span><span class="p">;</span>
-
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;CassetteInterface&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="k">public</span> <span class="nx">testPlayLoop</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteWillBePlayed</span><span class="p">();</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteWillBeRewind</span><span class="p">();</span>
-
-        <span class="nv">$player</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CassettePlayer</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="p">);</span>
-
-        <span class="nv">$player</span><span class="o">-&gt;</span><span class="na">playAndRewind</span><span class="p">();</span>
-    <span class="p">}</span>
-
-    <span class="k">private</span> <span class="k">function</span> <span class="nf">cassetteWillBePlayed</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
-            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;play&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="k">private</span> <span class="k">function</span> <span class="nf">cassetteWillBeRewind</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
-            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;rewind&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/setting-up-pelican-with-git.html" rel="bookmark"
-                           title="Permalink to Setting up Pelican with Git">Setting up Pelican with Git</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2013-03-18T09:24:18+01:00">
-                Published: Mon 18 March 2013
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/felix-delval.html">Félix Delval</a>
-        </address>
-<p>In <a href="/category/web-log.html">Web log</a>. </p>
-<p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/git.html">git</a> <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info -->                <p>Setting up a Pelican blog, updated with git</p>
-                <a class="readmore" href="/setting-up-pelican-with-git.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/there-is-always-a-first-step.html" rel="bookmark"
-                           title="Permalink to There is always a first step">There is always a first step</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2013-03-16T20:24:57+01:00">
-                Published: Sat 16 March 2013
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/felix-delval.html">Félix Delval</a>
-        </address>
-<p>In <a href="/category/web-log.html">Web log</a>. </p>
-
-</footer><!-- /.post-info -->                <p>A boring yet poetic first post</p>
-                <a class="readmore" href="/there-is-always-a-first-step.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 1
-</p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-
-                            <li><a href="https://twitter.com/fe_lix_">Twitter</a></li>
-                            <li><a href="http://es.linkedin.com/in/felixdelval/">LinkedIn</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
 </body>
 </html>
