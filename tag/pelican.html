@@ -74,18 +74,15 @@ owned by www-data. So it will be possible for the user www-data to write both in
 
 
 <p>Here is the content of my file</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="nv">GIT_WORK_TREE</span><span class="o">=</span>/var/www/myblog.git git checkout -f
 <span class="nb">cd</span> /var/www/myblog
 make html
 </pre></div>
-</td></tr></table>
+
 
 <p>Let's make sure the hook is executable :</p>
-<div class="highlight"><pre>chmod 755 /var/git/myblog.git/hooks/post-receive
+<div class="highlight"><pre>chmod <span class="m">755</span> /var/git/myblog.git/hooks/post-receive
 </pre></div>
 
 

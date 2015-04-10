@@ -21,7 +21,142 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/setting-up-pelican-with-git.html">Setting up Pelican with Git</a></h1>
+                    <h1 class="entry-title"><a href="/writing-expressiv-unit-test-injected-dependancy.html">Writing expressive unit test with injected dependancy</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-04-09T22:54:23+02:00">
+                Published: Thu 09 April 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/felix-delval.html">Félix Delval</a>
+        </address>
+<p>In <a href="/category/web-log.html">Web log</a>. </p>
+<p>tags: <a href="/tag/xunit.html">xUnit</a> <a href="/tag/php.html">php</a> <a href="/tag/expressiveness.html">expressiveness</a> </p>
+</footer><!-- /.post-info --><p>Recently I have been facing problem writing maintainable unit test for code that
+is relying heavily on injected dependancy.</p>
+<p>Sometimes you are facing code that is using multiple injected dependancies that should
+all be mocked for testing purpose. Mocking is a very effective pattern to test part of
+a system in isolation. Though when the unit test code is mock intensive it begins to be
+hard to understand, maintain and serve it first purpose help us in refactoring.</p>
+<p>Here is a pattern I found usefull to solve this issue.</p>
+<p>Let's take the example of an class and a interface it uses as a dependancy. Here is the interface:</p>
+<div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">interface</span> <span class="nx">CassetteInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">read</span><span class="p">();</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">isOver</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>And here the class that uses it :</p>
+<div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">class</span> <span class="nc">CassettePlayer</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$cassette</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">CassetteInterface</span> <span class="nv">$cassette</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span> <span class="o">=</span> <span class="nv">$cassette</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">playAndRewind</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">isOver</span><span class="p">())</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">read</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">rewind</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>If you would go writing test for this class, once all code as written, you would
+most likely start writing a test like this :</p>
+<div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">class</span> <span class="nc">CassettePlayerTest</span> <span class="nx">extend</span> <span class="nx">TestCase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nx">testPlayLoop</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$cassette</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;CassetteInterface&#39;</span><span class="p">);</span>
+
+        <span class="nv">$cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
+            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;play&#39;</span><span class="p">);</span>
+        <span class="nv">$cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
+            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;rewind&#39;</span><span class="p">);</span>
+
+        <span class="nv">$player</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CassettePlayer</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="p">);</span>
+
+        <span class="nv">$player</span><span class="o">-&gt;</span><span class="na">playAndRewind</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Writing the unit test for this class in such a manner leads to complex unit test
+code that is not maintanable and harder to read. Even though the code is short,
+the way the mock is around leads to complex formulation, more so when you start
+setting the expecting parameters and the desired output.</p>
+<p>Let's try to restructure the test so it is a bit more modular and reusable.</p>
+<p>I like doing the instantiation of the mock in private properties inside
+of the <code>TestCase::setUp</code> method. It gives two big advantages.</p>
+<p>Firstly the mock dependancies declaration needs to be in only one place, 
+making sure that all your tests are using the same objects.</p>
+<p>Secondly using them in a property, makes it easy to extract the behaviour definition of the
+mock to a method without parameters, creating easily readable and reusable behavioural
+methods.</p>
+<p>Here is how it would end :</p>
+<div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">class</span> <span class="nc">CassettePlayerTest</span> <span class="nx">extend</span> <span class="nx">TestCase</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$cassette</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;CassetteInterface&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="nx">testPlayLoop</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteWillBePlayed</span><span class="p">();</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteWillBeRewind</span><span class="p">();</span>
+
+        <span class="nv">$player</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CassettePlayer</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="p">);</span>
+
+        <span class="nv">$player</span><span class="o">-&gt;</span><span class="na">playAndRewind</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">function</span> <span class="nf">cassetteWillBePlayed</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
+            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;play&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">function</span> <span class="nf">cassetteWillBeRewind</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
+            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;rewind&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/setting-up-pelican-with-git.html" rel="bookmark"
+                           title="Permalink to Setting up Pelican with Git">Setting up Pelican with Git</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2013-03-18T09:24:18+01:00">
                 Published: Mon 18 March 2013
@@ -32,76 +167,10 @@
         </address>
 <p>In <a href="/category/web-log.html">Web log</a>. </p>
 <p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/git.html">git</a> <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info --><p>My goal was to be able to edit my Pelican blog in local, commit the modifications
-I made and then by pushing it to a git repository, the blog would be regenerated
-on the remote webserver.</p>
-<p>I found <a href="https://github.com/theon/pelicangit">pelicangit</a>, but the fact that it 
-forces to add a configuration file in /etc/ didn't please me. I am sure there is
-a way to this without needing administration right.</p>
-<p>My setup is inspired from <a href="http://crosbymichael.com/how-to-manage-your-website-with-git.html," title="How to manage your website with git">Micheal Crosby</a>.
-The main difference between my setup and his, is that I do not want the HTML output to be
-in the git repository. I want pelican to generate it on the remote server, in order
-to get a git repository as light as possible.</p>
-<h2>Starting your blog and first post</h2>
-<p>This is best described in the <a href="http://docs.getpelican.com/en/3.1.1/getting_started.html">pelican documentation</a>.</p>
-<h2>Setting a .gitignore file</h2>
-<p>We will be editing our blog on our local computer, chances are we will also use
-the <code>make devserver</code> to take a look at what we have produced. In that case, pelican
-will create file that we may not want to add to our git repository.</p>
-<div class="highlight"><pre><span class="nv">$ </span>cat .gitignore
-*.pid
-__pycache__
-output
-</pre></div>
-
-
-<p>Now we can commit all the content of our blog and start working on the remote server.</p>
-<h2>Setting up the remote server</h2>
-<p>The default folder for all my webcontent is /var/www and it belongs to the
-user www-data. Here lives all of my websites.</p>
-<p>I also have a /var/git folder where I store all of my git repositories. This folder is also
-owned by www-data. So it will be possible for the user www-data to write both in /var/www and /var/git.</p>
-<p>We must first create a bare git repository :</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir  /var/git/myblog.git
-<span class="nv">$ </span><span class="nb">cd</span> /var/git/myblog.git
-<span class="nv">$ </span>git init --bare
-</pre></div>
-
-
-<p>Now we must create the hook that will generate our HTML content after every push :</p>
-<div class="highlight"><pre>vim /var/git/myblog.git/hooks/post-receive
-</pre></div>
-
-
-<p>Here is the content of my file</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/bin/bash</span>
-<span class="nv">GIT_WORK_TREE</span><span class="o">=</span>/var/www/myblog.git git checkout -f
-<span class="nb">cd</span> /var/www/myblog
-make html
-</pre></div>
-</td></tr></table>
-
-<p>Let's make sure the hook is executable :</p>
-<div class="highlight"><pre>chmod 755 /var/git/myblog.git/hooks/post-receive
-</pre></div>
-
-
-<p>Let finish by adding the remote to our local git repository, so we can push on the remote server.</p>
-<div class="highlight"><pre><span class="nv">$ </span>git remote add blog www-data@myserver:/var/git/myblog.git
-</pre></div>
-
-
-<p>Now everytime you push content to your remote server, the content gets updated.</p>
-<div class="highlight"><pre><span class="nv">$ </span>git push blog master
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Setting up a Pelican blog, updated with git</p>
+                <a class="readmore" href="/setting-up-pelican-with-git.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
