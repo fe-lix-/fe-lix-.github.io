@@ -1,5 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>A web log</title><link href="/" rel="alternate"></link><link href="/feeds/web-log.atom.xml" rel="self"></link><id>/</id><updated>2013-03-18T09:24:18+01:00</updated><entry><title>Setting up Pelican with Git</title><link href="/setting-up-pelican-with-git.html" rel="alternate"></link><updated>2013-03-18T09:24:18+01:00</updated><author><name>Félix Delval</name></author><id>tag:,2013-03-18:setting-up-pelican-with-git.html</id><summary type="html">&lt;p&gt;My goal was to be able to edit my Pelican blog in local, commit the modifications
+<feed xmlns="http://www.w3.org/2005/Atom"><title>A web log</title><link href="http://felix.delval.eu/" rel="alternate"></link><link href="http://felix.delval.eu/feeds/web-log.atom.xml" rel="self"></link><id>http://felix.delval.eu/</id><updated>2015-04-09T22:54:23+02:00</updated><entry><title>Writing expressive unit test with injected dependancy</title><link href="http://felix.delval.eu/writing-expressiv-unit-test-injected-dependancy.html" rel="alternate"></link><updated>2015-04-09T22:54:23+02:00</updated><author><name>Félix Delval</name></author><id>tag:felix.delval.eu,2015-04-09:writing-expressiv-unit-test-injected-dependancy.html</id><summary type="html">&lt;p&gt;Recently I have been facing problem writing maintainable unit test for code that
+is relying heavily on injected dependancy.&lt;/p&gt;
+&lt;p&gt;Sometimes you are facing code that is using multiple injected dependancies that should
+all be mocked for testing purpose. Mocking is a very effective pattern to test part of
+a system in isolation. Though when the unit test code is mock intensive it begins to be
+hard to understand, maintain and serve it first purpose help us in refactoring.&lt;/p&gt;
+&lt;p&gt;Here is a pattern I found usefull to solve this issue.&lt;/p&gt;
+&lt;p&gt;Let's take the example of an class and a interface it uses as a dependancy. Here is the interface:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class="k"&gt;interface&lt;/span&gt; &lt;span class="nx"&gt;CassetteInterface&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;read&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;isOver&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And here the class that uses it :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CassettePlayer&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;private&lt;/span&gt; &lt;span class="nv"&gt;$cassette&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;__construct&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;CassetteInterface&lt;/span&gt; &lt;span class="nv"&gt;$cassette&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassette&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;$cassette&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;playAndRewind&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassette&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;isOver&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassette&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;read&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+
+        &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassette&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;rewind&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you would go writing test for this class, once all code as written, you would
+most likely start writing a test like this :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CassettePlayerTest&lt;/span&gt; &lt;span class="nx"&gt;extend&lt;/span&gt; &lt;span class="nx"&gt;TestCase&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="nx"&gt;testPlayLoop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nv"&gt;$cassette&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;getMock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;CassetteInterface&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="nv"&gt;$cassette&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;expects&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;once&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+            &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;method&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;play&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="nv"&gt;$cassette&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;expects&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;once&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+            &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;method&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rewind&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="nv"&gt;$player&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;CassettePlayer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassette&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="nv"&gt;$player&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;playAndRewind&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Writing the unit test for this class in such a manner leads to complex unit test
+code that is not maintanable and harder to read. Even though the code is short,
+the way the mock is around leads to complex formulation, more so when you start
+setting the expecting parameters and the desired output.&lt;/p&gt;
+&lt;p&gt;Let's try to restructure the test so it is a bit more modular and reusable.&lt;/p&gt;
+&lt;p&gt;I like doing the instantiation of the mock in private properties inside
+of the &lt;code&gt;TestCase::setUp&lt;/code&gt; method. It gives two big advantages.&lt;/p&gt;
+&lt;p&gt;Firstly the mock dependancies declaration needs to be in only one place, 
+making sure that all your tests are using the same objects.&lt;/p&gt;
+&lt;p&gt;Secondly using them in a property, makes it easy to extract the behaviour definition of the
+mock to a method without parameters, creating easily readable and reusable behavioural
+methods.&lt;/p&gt;
+&lt;p&gt;Here is how it would end :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CassettePlayerTest&lt;/span&gt; &lt;span class="nx"&gt;extend&lt;/span&gt; &lt;span class="nx"&gt;TestCase&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;private&lt;/span&gt; &lt;span class="nv"&gt;$cassette&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;setUp&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassette&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;getMock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;CassetteInterface&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="nx"&gt;testPlayLoop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassetteWillBePlayed&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassetteWillBeRewind&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+
+        &lt;span class="nv"&gt;$player&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;CassettePlayer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassette&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="nv"&gt;$player&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;playAndRewind&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;private&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;cassetteWillBePlayed&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassette&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;expects&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;once&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+            &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;method&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;play&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;private&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt; &lt;span class="nf"&gt;cassetteWillBeRewind&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;cassette&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;expects&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$this&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;once&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+            &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="na"&gt;method&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rewind&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="xUnit"></category><category term="php"></category><category term="expressiveness"></category></entry><entry><title>Setting up Pelican with Git</title><link href="http://felix.delval.eu/setting-up-pelican-with-git.html" rel="alternate"></link><updated>2013-03-18T09:24:18+01:00</updated><author><name>Félix Delval</name></author><id>tag:felix.delval.eu,2013-03-18:setting-up-pelican-with-git.html</id><summary type="html">&lt;p&gt;My goal was to be able to edit my Pelican blog in local, commit the modifications
 I made and then by pushing it to a git repository, the blog would be regenerated
 on the remote webserver.&lt;/p&gt;
 &lt;p&gt;I found &lt;a href="https://github.com/theon/pelicangit"&gt;pelicangit&lt;/a&gt;, but the fact that it 
@@ -41,18 +152,15 @@ owned by www-data. So it will be possible for the user www-data to write both in
 
 
 &lt;p&gt;Here is the content of my file&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
-2
-3
-4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="nv"&gt;GIT_WORK_TREE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/www/myblog.git git checkout -f
 &lt;span class="nb"&gt;cd&lt;/span&gt; /var/www/myblog
 make html
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
 
 &lt;p&gt;Let's make sure the hook is executable :&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;chmod 755 /var/git/myblog.git/hooks/post-receive
+&lt;div class="highlight"&gt;&lt;pre&gt;chmod &lt;span class="m"&gt;755&lt;/span&gt; /var/git/myblog.git/hooks/post-receive
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -63,6 +171,6 @@ make html
 
 &lt;p&gt;Now everytime you push content to your remote server, the content gets updated.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git push blog master
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="pelican"></category><category term="git"></category><category term="python"></category></entry><entry><title>There is always a first step</title><link href="/there-is-always-a-first-step.html" rel="alternate"></link><updated>2013-03-16T20:24:57+01:00</updated><author><name>Félix Delval</name></author><id>tag:,2013-03-16:there-is-always-a-first-step.html</id><summary type="html">&lt;p&gt;There is always a first step. It is never the most interesting path of any journey.
-It can be spectacular, banal and even boring. A first step is alway a step ahead in the unknown.
-So I guess it can only be a interesting one.:&lt;/p&gt;</summary></entry></feed>
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="pelican"></category><category term="git"></category><category term="python"></category></entry><entry><title>There is always a first step</title><link href="http://felix.delval.eu/there-is-always-a-first-step.html" rel="alternate"></link><updated>2013-03-16T20:24:57+01:00</updated><author><name>Félix Delval</name></author><id>tag:felix.delval.eu,2013-03-16:there-is-always-a-first-step.html</id><summary type="html">&lt;p&gt;There is always a first step. It is never the most interesting path of any journey.
+It can be spectacular, banal and even boring. A first step is alway a step ahead in the unknown.&lt;/p&gt;
+&lt;p&gt;So I guess it can only be a interesting one.&lt;/p&gt;</summary></entry></feed>

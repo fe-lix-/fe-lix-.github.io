@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A web log, Learn & share">
 
+        <link rel="alternate"  href="http://felix.delval.eu/feeds/all.atom.xml" type="application/atom+xml" title="A web log Full Atom Feed"/>
 
         <title>Web log category // A web log // Learn & share</title>
 
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.3.0/pure-min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/theme/css/pure.css">
+    <link rel="stylesheet" href="http://felix.delval.eu/theme/css/pure.css">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 </head>
@@ -25,7 +26,7 @@
                 <hgroup>
                     <h1 class="brand-main"><a href="/">A web log</a></h1>
                     <p class="tagline">Learn & share</p>
-                    <p class="links"><a href="/pages/about-me.html">About me</a></p>
+                    <p class="links"><a href="http://felix.delval.eu/pages/about-me.html">About me</a></p>
                     <p class="social">
                         <a href="https://twitter.com/fe_lix_">
                             <i class="fa fa-twitter-square fa-3x"></i>
@@ -49,43 +50,43 @@
 Posts in 'Web log'                </h1>
 <section class="post">
     <header class="post-header">
-        <a href="/author/felix-delval.html" title="See posts by Félix Delval">
+        <a href="http://felix.delval.eu/author/felix-delval.html" title="See posts by Félix Delval">
                 <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
         </a>
-        <h3><a class="post-title" href="/writing-expressiv-unit-test-injected-dependancy.html">Writing expressive unit test with injected dependancy</a></h3>
+        <h3><a class="post-title" href="http://felix.delval.eu/writing-expressiv-unit-test-injected-dependancy.html">Writing expressive unit test with injected dependancy</a></h3>
             <p class="post-meta"><p>Recently I have been facing problem writing maintainable unit test for code that
 is relying heavily on injected dependancy.</p>
 <p>Sometimes you are facing code that is using multiple injected dependancies that should
 all be mocked for testing purpose. Mocking is a very effective pattern to test part of
 a system ...</p></p>
             <p class="post-meta">
-                in <a href="/category/web-log.html">Web log</a> &middot; Thu 09 April 2015
+                in <a href="http://felix.delval.eu/category/web-log.html">Web log</a> &middot; Thu 09 April 2015
             </p>
     </header>
 </section><section class="post">
     <header class="post-header">
-        <a href="/author/felix-delval.html" title="See posts by Félix Delval">
+        <a href="http://felix.delval.eu/author/felix-delval.html" title="See posts by Félix Delval">
                 <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
         </a>
-        <h3><a class="post-title" href="/setting-up-pelican-with-git.html">Setting up Pelican with Git</a></h3>
+        <h3><a class="post-title" href="http://felix.delval.eu/setting-up-pelican-with-git.html">Setting up Pelican with Git</a></h3>
             <p class="post-meta"><p>My goal was to be able to edit my Pelican blog in local, commit the modifications
 I made and then by pushing it to a git repository, the blog would be regenerated
 on the remote webserver.</p>
 <p>I found <a href="https://github.com/theon/pelicangit">pelicangit</a>, but the fact that it 
 forces to add a configuration file ...</p></p>
             <p class="post-meta">
-                in <a href="/category/web-log.html">Web log</a> &middot; Mon 18 March 2013
+                in <a href="http://felix.delval.eu/category/web-log.html">Web log</a> &middot; Mon 18 March 2013
             </p>
     </header>
 </section><section class="post">
     <header class="post-header">
-        <a href="/author/felix-delval.html" title="See posts by Félix Delval">
+        <a href="http://felix.delval.eu/author/felix-delval.html" title="See posts by Félix Delval">
                 <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
         </a>
-        <h3><a class="post-title" href="/there-is-always-a-first-step.html">There is always a first step</a></h3>
+        <h3><a class="post-title" href="http://felix.delval.eu/there-is-always-a-first-step.html">There is always a first step</a></h3>
             <p class="post-meta"><p>A boring yet poetic first post</p></p>
             <p class="post-meta">
-                in <a href="/category/web-log.html">Web log</a> &middot; Sat 16 March 2013
+                in <a href="http://felix.delval.eu/category/web-log.html">Web log</a> &middot; Sat 16 March 2013
             </p>
     </header>
 </section><div class="pagination-wrapper content-subhead">
@@ -129,6 +130,16 @@ forces to add a configuration file ...</p></p>
         $('body').on('click', 'a[href="#"]', function(event) {
             event.preventDefault();
         });
+    </script>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-33080012-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
     </script>
 </body>
 </html>

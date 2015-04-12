@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A web log, Learn & share">
 
+        <link rel="alternate"  href="http://felix.delval.eu/feeds/all.atom.xml" type="application/atom+xml" title="A web log Full Atom Feed"/>
 
         <title>A web log // Learn & share</title>
 
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.3.0/pure-min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/theme/css/pure.css">
+    <link rel="stylesheet" href="http://felix.delval.eu/theme/css/pure.css">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 </head>
 
 <body>
 <ul>
-    <li><a href="/category/web-log.html">Web log</a></li>
+    <li><a href="http://felix.delval.eu/category/web-log.html">Web log</a></li>
 </ul>
     <script>
         var $top = $('.go-top');
@@ -43,6 +44,16 @@
         $('body').on('click', 'a[href="#"]', function(event) {
             event.preventDefault();
         });
+    </script>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-33080012-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
     </script>
 </body>
 </html>
