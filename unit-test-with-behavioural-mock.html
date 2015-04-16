@@ -55,7 +55,7 @@
             </section>
             <p>In the <a href="http://felix.delval.eu/writing-expressiv-unit-test-injected-dependancy.html">previous artictle</a>, we talked
 about a way to write more expressive unit test. Doing this we actually deffined the
-behaviour of our injected.</p>
+behaviour of our injected mocks.</p>
 <p>So if we push this logic further, we should actually start extracting this code 
 away from the test class to a pure behavior mock class.</p>
 <p>Let's see how that would take us with the cassette player example.</p>
@@ -108,7 +108,7 @@ away from the test class to a pure behavior mock class.</p>
 </pre></div>
 
 
-<p>And now how the test look small, concise and precise :</p>
+<p>And now the test look small, concise and precise :</p>
 <div class="highlight"><pre><span class="cp">&lt;?php</span>
 
 <span class="k">namespace</span> <span class="nx">My\App\BehavioralMock</span><span class="p">;</span>

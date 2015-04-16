@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>A web log</title><link href="http://felix.delval.eu/" rel="alternate"></link><link href="http://felix.delval.eu/feeds/all.atom.xml" rel="self"></link><id>http://felix.delval.eu/</id><updated>2015-04-16T22:16:48+02:00</updated><entry><title>Unit test with behavioural mock</title><link href="http://felix.delval.eu/unit-test-with-behavioural-mock.html" rel="alternate"></link><updated>2015-04-16T22:16:48+02:00</updated><author><name>Félix Delval</name></author><id>tag:felix.delval.eu,2015-04-16:unit-test-with-behavioural-mock.html</id><summary type="html">&lt;p&gt;In the &lt;a href="http://felix.delval.eu/writing-expressiv-unit-test-injected-dependancy.html"&gt;previous artictle&lt;/a&gt;, we talked
 about a way to write more expressive unit test. Doing this we actually deffined the
-behaviour of our injected.&lt;/p&gt;
+behaviour of our injected mocks.&lt;/p&gt;
 &lt;p&gt;So if we push this logic further, we should actually start extracting this code 
 away from the test class to a pure behavior mock class.&lt;/p&gt;
 &lt;p&gt;Let's see how that would take us with the cassette player example.&lt;/p&gt;
@@ -54,7 +54,7 @@ away from the test class to a pure behavior mock class.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;And now how the test look small, concise and precise :&lt;/p&gt;
+&lt;p&gt;And now the test look small, concise and precise :&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
 
 &lt;span class="k"&gt;namespace&lt;/span&gt; &lt;span class="nx"&gt;My\App\BehavioralMock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
