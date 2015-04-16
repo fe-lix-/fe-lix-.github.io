@@ -62,16 +62,21 @@ hard to understand, maintain and serve it first purpose help us in refactoring.<
 <p>Let's take the example of an class and a interface it uses as a dependancy. Here is the interface:</p>
 <div class="highlight"><pre><span class="cp">&lt;?php</span>
 
+<span class="k">namespace</span> <span class="nx">My\App</span><span class="p">;</span>
+
 <span class="k">interface</span> <span class="nx">CassetteInterface</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">read</span><span class="p">();</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">isOver</span><span class="p">();</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">rewind</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 
 
 <p>And here the class that uses it :</p>
 <div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">My\App</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">CassettePlayer</span>
 <span class="p">{</span>
@@ -98,18 +103,26 @@ hard to understand, maintain and serve it first purpose help us in refactoring.<
 most likely start writing a test like this :</p>
 <div class="highlight"><pre><span class="cp">&lt;?php</span>
 
-<span class="k">class</span> <span class="nc">CassettePlayerTest</span> <span class="nx">extend</span> <span class="nx">TestCase</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="nx">testPlayLoop</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nv">$cassette</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;CassetteInterface&#39;</span><span class="p">);</span>
+<span class="k">namespace</span> <span class="nx">My\App</span><span class="p">;</span>
 
-        <span class="nv">$cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
-            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;play&#39;</span><span class="p">);</span>
-        <span class="nv">$cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
+<span class="k">class</span> <span class="nc">CassettePlayerTest</span> <span class="k">extends</span> <span class="nx">\PHPUnit_Framework_TestCase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testPlayLoop</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$cassette</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;My\App\CassetteInterface&#39;</span><span class="p">);</span>
+
+        <span class="nv">$cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;isOver&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">willReturn</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+        <span class="nv">$cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;read&#39;</span><span class="p">);</span>
+        <span class="nv">$cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;isOver&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">willReturn</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+        <span class="nv">$cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
             <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;rewind&#39;</span><span class="p">);</span>
 
-        <span class="nv">$player</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CassettePlayer</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="p">);</span>
+        <span class="nv">$player</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CassettePlayer</span><span class="p">(</span><span class="nv">$cassette</span><span class="p">);</span>
 
         <span class="nv">$player</span><span class="o">-&gt;</span><span class="na">playAndRewind</span><span class="p">();</span>
     <span class="p">}</span>
@@ -132,38 +145,61 @@ methods.</p>
 <p>Here is how it would end :</p>
 <div class="highlight"><pre><span class="cp">&lt;?php</span>
 
-<span class="k">class</span> <span class="nc">CassettePlayerTest</span> <span class="nx">extend</span> <span class="nx">TestCase</span>
+<span class="k">namespace</span> <span class="nx">My\App</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">CassettePlayerExpressiveTest</span> <span class="k">extends</span> <span class="nx">\PHPUnit_Framework_TestCase</span>
 <span class="p">{</span>
     <span class="k">private</span> <span class="nv">$cassette</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$cassetteCounter</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;CassetteInterface&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;My\App\CassetteInterface&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteCounter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="k">public</span> <span class="nx">testPlayLoop</span><span class="p">()</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testPlayLoop</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteWillBePlayed</span><span class="p">();</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteWillBeRewind</span><span class="p">();</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteWillNotBeOver</span><span class="p">();</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteWillBeRead</span><span class="p">();</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteWillBeOver</span><span class="p">();</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteWillBeRewinded</span><span class="p">();</span>
 
         <span class="nv">$player</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CassettePlayer</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="p">);</span>
 
         <span class="nv">$player</span><span class="o">-&gt;</span><span class="na">playAndRewind</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="k">private</span> <span class="k">function</span> <span class="nf">cassetteWillBePlayed</span><span class="p">()</span>
+    <span class="k">private</span> <span class="k">function</span> <span class="nf">cassetteWillNotBeOver</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
-            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;play&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteCounter</span><span class="o">++</span><span class="p">))</span>
+            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;isOver&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">willReturn</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">private</span> <span class="k">function</span> <span class="nf">cassetteWillBeRewind</span><span class="p">()</span>
+    <span class="k">private</span> <span class="k">function</span> <span class="nf">cassetteWillBeRead</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">once</span><span class="p">())</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteCounter</span><span class="o">++</span><span class="p">))</span>
+            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;read&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">function</span> <span class="nf">cassetteWillBeOver</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteCounter</span><span class="o">++</span><span class="p">))</span>
+            <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;isOver&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">willReturn</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">function</span> <span class="nf">cassetteWillBeRewinded</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassette</span><span class="o">-&gt;</span><span class="na">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">at</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cassetteCounter</span><span class="o">++</span><span class="p">))</span>
             <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;rewind&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+
+
+<p><a href="https://github.com/fe-lix-/unit-tests-examples">The code from the examples is available here</a></p>
             <div class="hr"></div>
             <a href="#" class="go-top">Go Top</a>
 <div class="comments">
