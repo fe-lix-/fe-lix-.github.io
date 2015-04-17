@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://felix.delval.eu/</loc>
-<lastmod>2015-04-17T22:13:24-00:00</lastmod>
+<lastmod>2015-04-17T22:14:51-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://felix.delval.eu/archives.html</loc>
-<lastmod>2015-04-17T22:13:24-00:00</lastmod>
+<lastmod>2015-04-17T22:14:51-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://felix.delval.eu/tags.html</loc>
-<lastmod>2015-04-17T22:13:24-00:00</lastmod>
+<lastmod>2015-04-17T22:14:51-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://felix.delval.eu/categories.html</loc>
-<lastmod>2015-04-17T22:13:24-00:00</lastmod>
+<lastmod>2015-04-17T22:14:51-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -81,8 +81,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://felix.delval.eu/tag/expressiveness.html</loc>
-<lastmod>2015-04-09T22:54:23+00:09</lastmod>
+<loc>http://felix.delval.eu/tag/xunit.html</loc>
+<lastmod>2015-04-16T22:16:48+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -95,8 +95,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://felix.delval.eu/tag/mock.html</loc>
-<lastmod>2015-04-16T22:16:48+00:09</lastmod>
+<loc>http://felix.delval.eu/tag/python.html</loc>
+<lastmod>2013-03-18T09:24:18+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -109,6 +109,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://felix.delval.eu/tag/expressiveness.html</loc>
+<lastmod>2015-04-09T22:54:23+00:09</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://felix.delval.eu/tag/git.html</loc>
 <lastmod>2013-03-18T09:24:18+00:09</lastmod>
 <changefreq>daily</changefreq>
@@ -116,15 +123,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://felix.delval.eu/tag/xunit.html</loc>
+<loc>http://felix.delval.eu/tag/mock.html</loc>
 <lastmod>2015-04-16T22:16:48+00:09</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>http://felix.delval.eu/tag/python.html</loc>
-<lastmod>2013-03-18T09:24:18+00:09</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
