@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A web log, Learn & share">
+
+        <link rel="alternate"  href="http://felix.delval.eu/feeds/all.atom.xml" type="application/atom+xml" title="A web log Full Atom Feed"/>
+
+        <title>DDD Europe 2017 // A web log // Learn & share</title>
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://felix.delval.eu/theme/css/pure.css">
+    <link rel="stylesheet" href="http://felix.delval.eu/theme/css/pygments.css">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.0.1/jquery.fitvids.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".content").fitVids();
+        });
+    </script>
+</head>
+
+<body>
+<div class="pure-g-r" id="layout">
+    <div class="sidebar sidebar-article pure-u">
+        <header class="header-article">
+            <hgroup>
+                <a href="http://felix.delval.eu/author/felix-delval.html" title="See posts by Félix Delval">
+                        <img class="avatar" alt="Félix Delval" src="https://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
+                </a>
+                <h2 class="article-info">Félix Delval</h2>
+                <small class="about-author"></small>
+                <h5>Published</h5>
+                <p>Wed 15 March 2017</p>
+                <a href="/">&larr;Home</a>
+            </hgroup>
+        </header>
+    </div>
+    <div class="pure-u">
+        <div class="content">
+            <section class="post">
+                <header class="post-header">
+                    <h1>DDD Europe 2017</h1>
+                        <p class="post-meta">
+                            // under                                 <a class="post-category" href="http://felix.delval.eu/tag/ddd.html">ddd</a>
+                                <a class="post-category" href="http://felix.delval.eu/tag/conference.html">conference</a>
+                                <a class="post-category" href="http://felix.delval.eu/tag/ddd-europe.html">ddd-europe</a>
+                        </p>
+                </header>
+            </section>
+            <p>Earlier this year, I had the chance to attend the DDD Europe 2017 conference. It was my second at this conference, as I also participated in the first edition in Brussels in 2016.</p>
+<p>Here are a few comments on some of the talks that interested me most.</p>
+<h3>Thomas Ploch - Domain-Driven Organisation Design</h3>
+<p>Links: <a href="https://dddeurope.com/2017/speakers/thomas-ploch/###talk">Talk</a>
+<a href="http://slides.com/tploch/deck-9###/">Slides</a></p>
+<p>I really enjoyed Thomas' presentation. He talked about some generics on complex systems, this is the way he chose to represent his organization going through a very strong agile transformation. And later on they actually structured the company.</p>
+<p>An organization, as a complex adaptive system, has four main properties : self-organising, emergent, non-linear, order/chaos dynamic. Those properties will come to life when two criterias are met. All the agent of the system must have an autonomy, but all must share a common goal. This is why he emphasized on the importance of change agent, being element inside of the organization, who by their knowlegde and competence can influence the rest of the organization. His company chose <a href="https://en.wikipedia.org/wiki/OKR">OKR</a> to focus the energy of all elementon shared goals.</p>
+<h3>Udi Dahan - If (domain logic) then CQRS, or Saga?</h3>
+<p>Links: <a href="https://dddeurope.com/2017/speakers/udi-dahan/###keynote">Talk</a></p>
+<p>In this talk Udi Dahan entered in details in the complexity of managing alternatives scenario using conditional as 'if'. He made a strong case on using CQRS and sagas to handle such cases in collaborative context.</p>
+<p>He was using a web store checkout as his main example and trying to design
+a feature that would not add an item to the cart if the item is disabled. In a high concurency domain, he states that writing something as this will create a wrong sense of security:</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">class</span> <span class="nc">Cart</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nx">method</span> <span class="nx">add</span><span class="p">(</span><span class="nx">Product</span> <span class="nv">$product</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$product</span><span class="o">-&gt;</span><span class="na">isEnabled</span><span class="p">())</span> <span class="p">{</span>
+            <span class="c1">// What happens if the item is disable here? </span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">itemsInCart</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$product</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>The best way to solve this cases is to think of the cart as a Saga. The cart and the cart process are two seperate thing. The cart will be an entity, but the cart process will be a saga. A timeout will be put on the cart process to make sure that even if it has disabled items in it, they will be removed after a reasonable time.</p>
+<h3>Eric Evans - Keynote</h3>
+<p>Links: <a href="https://dddeurope.com/2017/speakers/eric-evans/###keynote">Talk</a></p>
+<p>Eric Evans' talk was very captivating, his style works with brio in this exercise, his has a calm voice and uses clear and punctuated sentences. It's always a pleasure to hear is talks. This one in particular felt as a collection of lesson learned, all related yet all differents.</p>
+<p><strong>Good design is imperfect design</strong>: The main goal of the design is to solve most of the issue elegantly, not all of them. If a design covers a large portion of the use case then it is good to be released. It is much preferable to ship early imperfect software than to polish indefinetely something that will never be used.</p>
+<p><strong>Avoid abstraction when concept are not clear</strong>: Abstraction are an amazing feature of object oriented programming, but introducing badly understood abstraction can lead to harder code to maintain in the future. The abstraction will direct your code more than you want. It's better to leave a feature with if then else logic than introduce early abstraction.</p>
+<p><strong>Honest naming</strong>: Give akward name to akward concept. If an operation has a behaviour that cannot describe with a few words, then give a more precise and akward name. He was using the example of the <em>add</em> method in most <em>DateTime</em> class. The fact that the method is called <code>add</code> should mean that the method should be associative which is not the case, he suggest using a more descriptive like <code>laterBy</code> or <code>advance</code>.</p>
+<p><strong>Community Garden Metaphor</strong>: He sees enterprise software as a community garden. It is a space in which some basic infrastructure is provided, you are given a lot and the responsability to have clear boundaries on that lot. The infrastructure is a perfect image for actual software infrastructure: servers, load-balancers, logging and monitoring. And the boundaries of each services should be very clear just as each lot in the garden.</p>
+<p><img alt="Community garden basic rules" src="http://felix.delval.eu/images/basic-rules-community-garden.png"></p>
+            <div class="hr"></div>
+            <a href="#" class="go-top">Go Top</a>
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = "aweblogfelix"; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div><footer class="footer">
+    <p>&copy; A web log &ndash;
+        Built with <a href="https://github.com/PurePelicanTheme/pure">Pure Theme</a>
+        for <a href="http://blog.getpelican.com/">Pelican</a>
+    </p>
+</footer>        </div>
+    </div>
+</div>
+    <script>
+        var $top = $('.go-top');
+
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
+
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
+
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-33080012-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+    </script>
+</body>
+</html>

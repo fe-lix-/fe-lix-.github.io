@@ -30,7 +30,7 @@
         <header class="header-article">
             <hgroup>
                 <a href="http://felix.delval.eu/author/felix-delval.html" title="See posts by Félix Delval">
-                        <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
+                        <img class="avatar" alt="Félix Delval" src="https://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
                 </a>
                 <h2 class="article-info">Félix Delval</h2>
                 <small class="about-author"></small>
@@ -53,13 +53,10 @@
                         </p>
                 </header>
             </section>
-            <p>In the <a href="http://felix.delval.eu/writing-expressiv-unit-test-injected-dependancy.html">previous artictle</a>, we talked
-about a way to write more expressive unit test. Doing this we actually deffined the
-behaviour of our injected mocks.</p>
-<p>So if we push this logic further, we should actually start extracting this code 
-away from the test class to a pure behavior mock class.</p>
+            <p>In the <a href="http://felix.delval.eu/writing-expressiv-unit-test-injected-dependancy.html">previous artictle</a>, we talked about a way to write more expressive unit test. Doing this we actually deffined the behaviour of our injected mocks.</p>
+<p>So if we push this logic further, we should actually start extracting this code away from the test class to a pure behavior mock class.</p>
 <p>Let's see how that would take us with the cassette player example.</p>
-<div class="highlight"><pre><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
 
 <span class="k">namespace</span> <span class="nx">My\App\BehavioralMock</span><span class="p">;</span>
 
@@ -109,7 +106,7 @@ away from the test class to a pure behavior mock class.</p>
 
 
 <p>And now the test look small, concise and precise :</p>
-<div class="highlight"><pre><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
 
 <span class="k">namespace</span> <span class="nx">My\App\BehavioralMock</span><span class="p">;</span>
 
@@ -135,15 +132,10 @@ away from the test class to a pure behavior mock class.</p>
 
 
 <h2>What are the advantages of this methods?</h2>
-<p>Well for a starter this code is extremely maintainable and
-reusable. It makes a lot of sense to use this technique for 
-interfaces that are used in multiple places.</p>
-<p>The test is extremely readable. So readable it almost looks
-like a human readable documentation of the code.</p>
+<p>Well for a starter this code is extremely maintainable and reusable. It makes a lot of sense to use this technique for interfaces that are used in multiple places.</p>
+<p>The test is extremely readable. So readable it almost looks like a human readable documentation of the code.</p>
 <h2>Is there any disadvantage?</h2>
-<p>The obvious one is that all your unit test code are now sharing
-this class and any undesirable change to it will compromise all
-of your unit tests.</p>
+<p>The obvious one is that all your unit test code are now sharing this class and any undesirable change to it will compromise all of your unit tests.</p>
 <p><a href="https://github.com/fe-lix-/unit-tests-examples">The code from the examples is available here</a></p>
             <div class="hr"></div>
             <a href="#" class="go-top">Go Top</a>

@@ -30,7 +30,7 @@
         <header class="header-article">
             <hgroup>
                 <a href="http://felix.delval.eu/author/felix-delval.html" title="See posts by Félix Delval">
-                        <img class="avatar" alt="Félix Delval" src="http://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
+                        <img class="avatar" alt="Félix Delval" src="https://www.gravatar.com/avatar/ab75ea8620f8678a377fc3eb587f9b87">
                 </a>
                 <h2 class="article-info">Félix Delval</h2>
                 <small class="about-author"></small>
@@ -52,23 +52,14 @@
                         </p>
                 </header>
             </section>
-            <p>My goal was to be able to edit my Pelican blog in local, commit the modifications
-I made and then by pushing it to a git repository, the blog would be regenerated
-on the remote webserver.</p>
-<p>I found <a href="https://github.com/theon/pelicangit">pelicangit</a>, but the fact that it 
-forces to add a configuration file in /etc/ didn't please me. I am sure there is
-a way to this without needing administration right.</p>
-<p>My setup is inspired from <a href="http://crosbymichael.com/how-to-manage-your-website-with-git.html," title="How to manage your website with git">Micheal Crosby</a>.
-The main difference between my setup and his, is that I do not want the HTML output to be
-in the git repository. I want pelican to generate it on the remote server, in order
-to get a git repository as light as possible.</p>
+            <p>My goal was to be able to edit my Pelican blog in local, commit the modifications I made and then by pushing it to a git repository, the blog would be regenerated on the remote webserver.</p>
+<p>I found <a href="https://github.com/theon/pelicangit">pelicangit</a>, but the fact that it forces to add a configuration file in /etc/ didn't please me. I am sure there is a way to this without needing administration right.</p>
+<p>My setup is inspired from <a href="http://crosbymichael.com/how-to-manage-your-website-with-git.html," title="How to manage your website with git">Micheal Crosby</a>. The main difference between my setup and his, is that I do not want the HTML output to be in the git repository. I want pelican to generate it on the remote server, in order to get a git repository as light as possible.</p>
 <h2>Starting your blog and first post</h2>
 <p>This is best described in the <a href="http://docs.getpelican.com/en/3.1.1/getting_started.html">pelican documentation</a>.</p>
 <h2>Setting a .gitignore file</h2>
-<p>We will be editing our blog on our local computer, chances are we will also use
-the <code>make devserver</code> to take a look at what we have produced. In that case, pelican
-will create file that we may not want to add to our git repository.</p>
-<div class="highlight"><pre><span class="nv">$ </span>cat .gitignore
+<p>We will be editing our blog on our local computer, chances are we will also use the <code>make devserver</code> to take a look at what we have produced. In that case, pelican will create file that we may not want to add to our git repository.</p>
+<div class="highlight"><pre><span></span>$ cat .gitignore
 *.pid
 __pycache__
 output
@@ -77,24 +68,22 @@ output
 
 <p>Now we can commit all the content of our blog and start working on the remote server.</p>
 <h2>Setting up the remote server</h2>
-<p>The default folder for all my webcontent is /var/www and it belongs to the
-user www-data. Here lives all of my websites.</p>
-<p>I also have a /var/git folder where I store all of my git repositories. This folder is also
-owned by www-data. So it will be possible for the user www-data to write both in /var/www and /var/git.</p>
+<p>The default folder for all my webcontent is /var/www and it belongs to the user www-data. Here lives all of my websites.</p>
+<p>I also have a /var/git folder where I store all of my git repositories. This folder is also owned by www-data. So it will be possible for the user www-data to write both in /var/www and /var/git.</p>
 <p>We must first create a bare git repository :</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir  /var/git/myblog.git
-<span class="nv">$ </span><span class="nb">cd</span> /var/git/myblog.git
-<span class="nv">$ </span>git init --bare
+<div class="highlight"><pre><span></span>$ mkdir  /var/git/myblog.git
+$ <span class="nb">cd</span> /var/git/myblog.git
+$ git init --bare
 </pre></div>
 
 
 <p>Now we must create the hook that will generate our HTML content after every push :</p>
-<div class="highlight"><pre>vim /var/git/myblog.git/hooks/post-receive
+<div class="highlight"><pre><span></span>vim /var/git/myblog.git/hooks/post-receive
 </pre></div>
 
 
 <p>Here is the content of my file</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="nv">GIT_WORK_TREE</span><span class="o">=</span>/var/www/myblog.git git checkout -f
 <span class="nb">cd</span> /var/www/myblog
 make html
@@ -102,17 +91,17 @@ make html
 
 
 <p>Let's make sure the hook is executable :</p>
-<div class="highlight"><pre>chmod <span class="m">755</span> /var/git/myblog.git/hooks/post-receive
+<div class="highlight"><pre><span></span>chmod <span class="m">755</span> /var/git/myblog.git/hooks/post-receive
 </pre></div>
 
 
 <p>Let finish by adding the remote to our local git repository, so we can push on the remote server.</p>
-<div class="highlight"><pre><span class="nv">$ </span>git remote add blog www-data@myserver:/var/git/myblog.git
+<div class="highlight"><pre><span></span>$ git remote add blog www-data@myserver:/var/git/myblog.git
 </pre></div>
 
 
 <p>Now everytime you push content to your remote server, the content gets updated.</p>
-<div class="highlight"><pre><span class="nv">$ </span>git push blog master
+<div class="highlight"><pre><span></span>$ git push blog master
 </pre></div>
             <div class="hr"></div>
             <a href="#" class="go-top">Go Top</a>
