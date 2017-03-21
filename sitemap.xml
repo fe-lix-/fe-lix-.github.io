@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://felix.delval.eu/</loc>
-<lastmod>2017-03-20T11:21:07-00:00</lastmod>
+<lastmod>2017-03-21T09:50:32-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://felix.delval.eu/archives.html</loc>
-<lastmod>2017-03-20T11:21:07-00:00</lastmod>
+<lastmod>2017-03-21T09:50:32-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://felix.delval.eu/tags.html</loc>
-<lastmod>2017-03-20T11:21:07-00:00</lastmod>
+<lastmod>2017-03-21T09:50:32-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://felix.delval.eu/categories.html</loc>
-<lastmod>2017-03-20T11:21:07-00:00</lastmod>
+<lastmod>2017-03-21T09:50:32-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
