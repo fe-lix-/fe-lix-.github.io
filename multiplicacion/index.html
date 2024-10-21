@@ -13,6 +13,12 @@
                 padding: 6px 0px;
             }
 
+            #configuration {
+                display: flex;
+                flex-direction: column;
+            }
+
+
             @media print
             {    
                 .no-print, .no-print *
@@ -24,14 +30,19 @@
         <script>
             function generate() {
                 const worksheet = document.getElementById('worksheet');
-                const max = document.getElementById('max').value;
-                const number = document.getElementById('number').value;
+                const firstMin = parseInt(document.getElementById('first-min').value);
+                const firstMax = parseInt(document.getElementById('first-max').value);
+                const secondMin = parseInt(document.getElementById('second-min').value);
+                const secondMax = parseInt(document.getElementById('second-max').value);
+                const number = parseInt(document.getElementById('number').value);
 
-                function getRandomInt(max) {
-                    return Math.floor(Math.random() * max);
+                function getRandomInt(min, max) {
+                    min = Math.ceil(min);
+                    max = Math.floor(max);
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
                 }
 
-                function createCell(x, y) {
+                function createCell(x, y, min, max) {
                     var cell = document.createElement('div');
                     cell.innerHTML = `${x} x ${y} =`;
                     return cell;
@@ -39,7 +50,10 @@
 
                 worksheet.innerHTML = '';
                 for (var i = 0; i < number; i++) {
-                    const cell = createCell(getRandomInt(max - 1) + 1, getRandomInt(10)+1);
+                    const cell = createCell(
+                        getRandomInt(firstMin, firstMax), 
+                        getRandomInt(secondMin, secondMax),
+                    );
                     
                     worksheet.appendChild(cell);
                 }
@@ -47,11 +61,25 @@
         </script>
         <h1>Hoja de trabajo de multiplicación</h1>
         <div id="configuration" class="no-print">
-            <label for="rows">Hasta:</label>
-            <input type="number" id="max" value="9">
-            <label for="columns">Numeros de multiplicación:</label>
-            <input type="number" id="number" value="60">
-            <button id="generate" onclick="generate()">Generar</button>
+            <div>
+                <b>Primer numero:</b>
+                <label for="from"> Desde:</label>
+                <input type="number" id="first-min" value="1">
+                <label for="rows">Hasta:</label>
+                <input type="number" id="first-max" value="9">
+            </div>
+            <div>
+                <b>Segundo numero:</b>
+                <label for="from"> Desde:</label>
+                <input type="number" id="second-min" value="1">
+                <label for="rows">Hasta:</label>
+                <input type="number" id="second-max" value="9">
+            </div>
+            <div>
+                <label for="columns">Numeros de multiplicación:</label>
+                <input type="number" id="number" value="60">
+                <button id="generate" onclick="generate()">Generar</button>
+            </div>
         </div>
         <div id="worksheet"></div>
     </body>
