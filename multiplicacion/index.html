@@ -28,6 +28,8 @@
             }
         </style>
         <script>
+            const MIN_SPACE_BETWEEN_PAIRS = 3;
+
             function generate() {
                 const worksheet = document.getElementById('worksheet');
                 const firstMin = parseInt(document.getElementById('first-min').value);
@@ -35,6 +37,8 @@
                 const secondMin = parseInt(document.getElementById('second-min').value);
                 const secondMax = parseInt(document.getElementById('second-max').value);
                 const number = parseInt(document.getElementById('number').value);
+
+                const lastPairs = [];
 
                 function getRandomInt(min, max) {
                     min = Math.ceil(min);
@@ -49,10 +53,28 @@
                 }
 
                 worksheet.innerHTML = '';
-                for (var i = 0; i < number; i++) {
+                while (worksheet.childElementCount < number) {
+                    const firstNumber = getRandomInt(firstMin, firstMax);
+                    const secondNumber = getRandomInt(secondMin, secondMax);
+
+                    if (lastPairs.includes(`${firstNumber}-${secondNumber}`)) {
+                        console.log('repeated', firstNumber, secondNumber);
+                        continue;
+                    }
+
+                    const pair = firstNumber < secondNumber
+                        ? `${firstNumber}-${secondNumber}`
+                        : `${secondNumber}-${firstNumber}`;
+                    
+                    lastPairs.push(pair);
+
+                    if (lastPairs.length > MIN_SPACE_BETWEEN_PAIRS) {
+                        lastPairs.shift();
+                    }
+
                     const cell = createCell(
-                        getRandomInt(firstMin, firstMax), 
-                        getRandomInt(secondMin, secondMax),
+                        firstNumber, 
+                        secondNumber,
                     );
                     
                     worksheet.appendChild(cell);
@@ -64,7 +86,7 @@
             <div>
                 <b>Primer numero:</b>
                 <label for="from"> Desde:</label>
-                <input type="number" id="first-min" value="1">
+                <input type="number" id="first-min" value="2">
                 <label for="rows">Hasta:</label>
                 <input type="number" id="first-max" value="9">
             </div>
