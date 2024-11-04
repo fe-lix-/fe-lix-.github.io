@@ -13,6 +13,46 @@
                 padding: 6px 0px;
             }
 
+            #worksheet div.vertical {
+                display: grid;
+                grid-template-columns: 20px 1fr;
+                grid-template-areas:
+                    " . firstNumber"
+                    "sign secondNumber"
+                    "line line"
+                    "result .";
+                text-align: right;
+                width: 120px;
+                letter-spacing: 4px;
+                padding-bottom: 100px;
+            }
+
+            #worksheet .line {
+                display: none;
+                grid-area: line;
+                border-top: 1px solid black;
+            }
+
+            #worksheet div.vertical .line {
+                display: block;
+            }
+
+            #worksheet span.firstNumber {
+                grid-area: firstNumber;
+            }
+
+            #worksheet span.secondNumber {
+                grid-area: secondNumber;
+            }
+            
+            #worksheet span.sign {
+                grid-area: sign;
+            }
+
+            #worksheet span.result {
+                grid-area: result;
+            }
+
             #configuration {
                 display: flex;
                 flex-direction: column;
@@ -30,6 +70,21 @@
         <script>
             const MIN_SPACE_BETWEEN_PAIRS = 3;
 
+            function toggleVertical() {
+                const worksheet = document.getElementById('worksheet');
+                const vertical = document.getElementById('vertical').checked;
+
+                if (vertical) {
+                    worksheet.querySelectorAll(':scope > div').forEach(cell => {
+                        cell.classList.add('vertical');
+                    });
+                } else {
+                    worksheet.querySelectorAll(':scope > div').forEach(cell => {
+                        cell.classList.remove('vertical');
+                    });
+                }
+            }
+
             function generate() {
                 const worksheet = document.getElementById('worksheet');
                 const firstMin = parseInt(document.getElementById('first-min').value);
@@ -46,9 +101,26 @@
                     return Math.floor(Math.random() * (max - min + 1)) + min;
                 }
 
+                function createSpan(text, className) {
+                    const span = document.createElement('span');
+                    span.innerHTML = text;
+                    span.classList.add(className);
+                    return span;
+                }
+
+                function createLine() {
+                    const line = document.createElement('div');
+                    line.classList.add('line');
+                    return line;
+                }
+
                 function createCell(x, y, min, max) {
                     var cell = document.createElement('div');
-                    cell.innerHTML = `${x} x ${y} =`;
+                    cell.appendChild(createSpan(x, 'firstNumber'));
+                    cell.appendChild(createSpan('x', 'sign'));
+                    cell.appendChild(createSpan(y, 'secondNumber'));
+                    cell.appendChild(createLine());
+                    cell.appendChild(createSpan('=', 'result'));
                     return cell;
                 }
 
@@ -101,6 +173,10 @@
                 <label for="columns">Numeros de multiplicación:</label>
                 <input type="number" id="number" value="60">
                 <button id="generate" onclick="generate()">Generar</button>
+            </div>
+            <div>
+                <label for="vertical">Representación vertical:</label>
+                <input type="checkbox" id="vertical" onclick="toggleVertical()" value="0">
             </div>
         </div>
         <div id="worksheet"></div>
