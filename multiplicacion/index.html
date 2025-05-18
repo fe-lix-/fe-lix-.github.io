@@ -129,7 +129,14 @@
                     const firstNumber = getRandomInt(firstMin, firstMax);
                     const secondNumber = getRandomInt(secondMin, secondMax);
 
-                    if (lastPairs.includes(`${firstNumber}-${secondNumber}`)) {
+                    numberAlreadyUsed = lastPairs.some(pair => {
+                        const [first, second] = pair.split('-').map(Number);
+                        return (first === firstNumber && second === secondNumber) || 
+                               (first === secondNumber && second === firstNumber) ||
+                               (first * second === firstNumber * secondNumber);
+                    });
+
+                    if (numberAlreadyUsed) {
                         console.log('repeated', firstNumber, secondNumber);
                         continue;
                     }
